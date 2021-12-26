@@ -1,14 +1,79 @@
+
+<!DOCTYPE html>
 <html>
-<body>
-<title>Plagiarism Checker</title>
-<form action="http://localhost:5000" method="POST">
-    <p>Input Text : </p>
-    <p><textarea name="query" rows="8" cols="50" autofocus>{{query}}</textarea></p>
-    <br>
-    <p><input type="submit" name="submit" value="CHECK PLAGIARISM"></p>
-    <br>
-    <p>
-    <h3>{{output}}</h3></p>
-</form>
-</body>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        font-family: "Lato", sans-serif;
+      }
+
+      .sidenav {
+        --offset: var(--space);
+        /* ... */
+        position: sticky;
+        top: var(--offset);
+        height: 100%;
+        width: 300px;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #111;
+        overflow-x: hidden;
+        padding-top: 20px;
+      }
+
+      .sidenav a {
+        padding: 6px 8px 6px 16px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+      }
+
+      .sidenav a:hover {
+        color: #f1f1f1;
+      }
+
+      .main {
+        margin-left: 300px; /* Same as the width of the sidenav */
+        font-size: 28px; /* Increased text to enable scrolling */
+        padding: 0px 10px;
+      }
+
+      @media screen and (max-height: 450px) {
+        .sidenav {
+          padding-top: 15px;
+        }
+        .sidenav a {
+          font-size: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidenav">
+        <a href="/">Home</a>
+      <a href="{{ url_for('upload_file') }}"
+        >Compute the similarity between files</a
+      >
+      <a href="{{ url_for('loadPage') }}"
+        >Compute the similarity between query and database file</a
+      >
+      <a href="#contact">Contact</a>
+    </div>
+
+
+        <form class = "main" action="http://localhost:5000" method="POST">
+            <p>Input Text : </p>
+            <p><textarea name="query" rows="8" cols="50" autofocus>{{query}}</textarea></p>
+            <br>
+            <p><input type="submit" name="submit" value="CHECK PLAGIARISM"></p>
+            <br>
+            <p>
+            <h3>{{output}}</h3></p>
+        </form>
+
+  </body>
 </html>
