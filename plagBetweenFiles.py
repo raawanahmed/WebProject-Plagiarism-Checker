@@ -33,6 +33,7 @@ def cosineSimilarity(x, y):
 
 
 def PlagiarismChecker(filesWithTheirVectors):
+
     for curFile, curVector in filesWithTheirVectors:
         temp = filesWithTheirVectors.copy()
         current_index = temp.index((curFile, curVector))
@@ -40,7 +41,7 @@ def PlagiarismChecker(filesWithTheirVectors):
         for otherFile, otherVector in temp:
             scoreOfSimilarity = cosineSimilarity(curVector, otherVector)
             file_pair = sorted((curFile, otherFile))
-            score = (file_pair[0], file_pair[1], scoreOfSimilarity)
+            score = (file_pair[0], file_pair[1], "{:.2%}".format( scoreOfSimilarity) ) 
             plagiarismResults.add(score)
     return plagiarismResults
 
