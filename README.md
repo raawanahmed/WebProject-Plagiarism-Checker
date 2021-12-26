@@ -10,7 +10,7 @@ Project contains two types of plagiarism checkers
    query is to the existing database file.
 
 ### Steps for first plagiarism
-1. User enter the files.
+1. User enters the files.
 2. Files are processed
 3. Calculations are done (Term Frequency, Cosine Similarity)
 4. The Plagiarism Percentage is returned on the web page
