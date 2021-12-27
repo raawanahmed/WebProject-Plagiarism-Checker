@@ -1,6 +1,7 @@
 <html>
 <head>
-    <link href="{{ url_for('static', filename='style2.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='navBar.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='button.css') }}" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="left">
@@ -23,7 +24,7 @@
         <p>Input Text : </p>
         <p><textarea name="query" rows="8" cols="50" autofocus>{{query}}</textarea></p>
         <br>
-        <button class="button" style="vertical-align:middle"><span>Check Plagiarism </span></button>
+        <button class="btn" style="vertical-align:middle"><span>Check Plagiarism </span></button>
         <br>
         <p> <h3>{{output}}</h3></p>
     </form>
