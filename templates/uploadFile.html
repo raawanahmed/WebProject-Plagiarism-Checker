@@ -7,6 +7,31 @@
         font-family: "Lato", sans-serif;
       }
 
+      .button {
+        display: inline-block;
+
+        font-size: 24px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: #fff;
+        background-color: #4caf50;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 9px #999;
+      }
+
+      .button:hover {
+        background-color: #3e8e41;
+      }
+
+      .button:active {
+        background-color: #3e8e41;
+        box-shadow: 0 5px #666;
+        transform: translateY(4px);
+      }
+
       .sidenav {
         --offset: var(--space);
         /* ... */
@@ -53,7 +78,7 @@
   </head>
   <body>
     <div class="sidenav">
-        <a href="/">Home</a>
+      <a href="/">Home</a>
       <a href="{{ url_for('upload_file') }}"
         >Compute the similarity between files</a
       >
@@ -71,7 +96,7 @@
       enctype="multipart/form-data"
     >
       <input type="file" name="file_name" multiple />
-      <input type="submit" value="Submit" />
+      <button class="button">Submit</button>
       <br />
       <input type="submit" value="Show Results" name="action1" />
     </form>
