@@ -4,7 +4,7 @@ from flask import Flask, request, render_template
 
 app = Flask("__name__")
 
-app.config["UPLOAD_PATH"] = "D:\My projects\WebProject-Plagiarism-Checker"
+app.config["UPLOAD_PATH"] = "D:\Computer Sceince\Projects\WebProject-Plagiarism-Checker"
 
 
 @app.route("/upload_file", methods=["GET", "POST"])
