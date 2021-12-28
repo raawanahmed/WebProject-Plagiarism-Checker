@@ -2,12 +2,11 @@
 
 Project contains two types of plagiarism checkers
 
-1) Plagiarism Checker system that is used to detect plagiarism in files using cosine similarity. To compute the
-   similarity between all files on project directory , the raw data is transformed into vectors, and then to arrays of
-   numbers and then used vectors to compute the similarity between the files and prints the value in Decimals
-   where `1.0` indicates `100%`.
-2) Web application of Plagiarism Checker using Python-Flask. TF-IDF and cosine similarity. It checks for how similar the
-   query is to the existing database file.
+1) Plagiarism Checker system that is used to detect plagiarism in files using cosine similarity. To compute the similarity between all files on project directory , the raw data is transformed into vectors, and then to arrays of numbers and then used vectors to compute the similarity between the files and prints the percentage. 
+
+2) Plagiarism Checker using Python-Flask. TF-IDF and cosine similarity. It checks for how similar the query is to the existing database file.
+
+3) Plagiarism Checker system that is used to detect plagiarism of the entered file with the given query.ase file.
 
 ### Steps for first plagiarism
 1. User enters the files.
