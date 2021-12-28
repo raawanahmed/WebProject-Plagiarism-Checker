@@ -3,7 +3,7 @@ from flask import Flask, render_template
 from plagBetweenFiles import *
 from plagBetweenInputQueryAndDatabaseFile import *
 from plagBetweenQueryAndEnteredFile import *
-import os;
+import os
 
 app = Flask("__name__")
 
