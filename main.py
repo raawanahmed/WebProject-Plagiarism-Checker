@@ -3,10 +3,11 @@ from flask import Flask, render_template
 from plagBetweenFiles import *
 from plagBetweenInputQueryAndDatabaseFile import *
 from plagBetweenQueryAndEnteredFile import *
+import os;
 
 app = Flask("__name__")
 
-app.config["UPLOAD_PATH"] = "D:\My projects\WebProject-Plagiarism-Checker"
+app.config["UPLOAD_PATH"] = os.getcwd()
 
 
 @app.route("/upload_file", methods=["GET", "POST"])
