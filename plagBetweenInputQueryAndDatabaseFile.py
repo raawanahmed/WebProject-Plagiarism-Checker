@@ -1,5 +1,7 @@
-import re
 import math
+import os
+import re
+
 from flask import request
 
 
@@ -32,10 +34,13 @@ def calcSimilarity():
     lowercaseQuery = inputQuery.lower()
     # Replace punctuation by space and split
     queryWordsList = re.sub("[^\w]", " ", lowercaseQuery).split()
+    if len(queryWordsList) == 0:
+        return 0
     for word in queryWordsList:
         allWords.add(word)
 
-    curDatabase = open("database1.txt", "r").read().lower()
+    path_to_file = os.path.join("./database", "team.txt")
+    curDatabase = open(path_to_file, "r").read().lower()
     # Replace punctuation by space and split
     databaseWordsList = re.sub("[^\w]", " ", curDatabase).split()
     for word in databaseWordsList:

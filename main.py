@@ -12,19 +12,21 @@ app.config["UPLOAD_PATH"] = "D:\My projects\WebProject-Plagiarism-Checker"
 @app.route("/upload_file", methods=["GET", "POST"])
 def upload_file():
     if request.method == 'POST' and request.form.get('action1') == 'Show Results':
-        plagiarismRes = solve()  # try catch
+        plagiarismRes = solve()
+        if plagiarismRes == 0:
+            return render_template("uploadFiles.html", msg="There are no files chosen.")
         return render_template('resultsPage.html', plagiarismRes=plagiarismRes)
     if request.method == 'POST':
         for f in request.files.getlist('file_name'):
             f.save(os.path.join(app.config["UPLOAD_PATH"], f.filename))
-        return render_template("uploadFiles.html", msg="Files have been uploaded successfully")
-    return render_template("uploadFiles.html", msg="Please, Choose the files")
+        return render_template("uploadFiles.html", msg="Files have been uploaded successfully.")
+    return render_template("uploadFiles.html", msg="Please, Choose the files.")
 
 
 @app.route("/")
 def Home():
     deleteFiles()
-    deleteFileInDatabaseFolder()
+    deleteTxtFiles()
     return render_template("homePage.html")
 
 
@@ -36,23 +38,26 @@ def loadPage():
 @app.route("/", methods=['POST'])
 def plagBetweenInputQueryAndDatabaseFile():
     d = calcSimilarity()
+    if d == 0:
+        return render_template("queryAndDatabasePage.html", msg="There is no query entered.")
     return render_template('queryAndDatabasePage.html', query=d['inputQuery'], output=d['output'])
-
-
-app.config["PATH2"] = "D:\My projects\WebProject-Plagiarism-Checker\database"
 
 
 @app.route("/QueryAndEnteredFile", methods=["GET", "POST"])
 def plagBetweenQueryAndEnteredFile():
     if request.method == 'POST' and request.form.get('action2') == 'Show Results':
-        plagiarismRes = calcSimilarity()
+        plagiarismRes = calcSimilarity2()
+        if plagiarismRes == 0:
+            return render_template("plagBetweenQueryAndEnteredFile.html", msg="There is no files chosen.")
+        if plagiarismRes == -1:
+            return render_template("plagBetweenQueryAndEnteredFile.html", msg="There is no query entered.")
         return render_template('plagBetweenQueryAndEnteredFile.html', query=plagiarismRes['inputQuery'],
                                output=plagiarismRes['output'])
     if request.method == 'POST':
         f = request.files['file']
-        f.save(os.path.join(app.config["PATH2"], f.filename))
-        return render_template('plagBetweenQueryAndEnteredFile.html', msg="File has been uploaded successfully")
-    return render_template('plagBetweenQueryAndEnteredFile.html', msg="Please, Choose a file")
+        f.save(os.path.join(app.config["UPLOAD_PATH"], f.filename))
+        return render_template('plagBetweenQueryAndEnteredFile.html', msg="File has been uploaded successfully.")
+    return render_template('plagBetweenQueryAndEnteredFile.html', msg="Please, Choose a file.")
 
 
 app.run()

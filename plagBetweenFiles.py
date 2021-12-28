@@ -48,6 +48,9 @@ def PlagiarismChecker(filesWithTheirVectors):
 def solve():
     # Reading all ".cpp" files
     files = [doc for doc in os.listdir() if doc.endswith('.cpp')]
+
+    if len(files) == 0:
+        return 0
     # load all the path ".cpp" files on project directory.
     fileStore = [open(_file, encoding="utf-8").read() for _file in files]
     # Vectorize the data.

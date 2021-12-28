@@ -35,6 +35,11 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="shared-indexes" />
   </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\My projects\WebProject-Plagiarism-Checker" />
+    </key>
+  </component>
   <component name="RunManager" selected="Python.main">
     <configuration name="homePage" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Simple-Plagiarism-Checker" />

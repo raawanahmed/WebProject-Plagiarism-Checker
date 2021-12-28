@@ -27,7 +27,7 @@ def calcDotProduct(inputQueryTF, databaseTF):
     return dotProduct
 
 
-def calcSimilarity():
+def calcSimilarity2():
     allWords = set()
     inputQuery = request.form['query']
     lowercaseQuery = inputQuery.lower()
@@ -36,8 +36,13 @@ def calcSimilarity():
     for word in queryWordsList:
         allWords.add(word)
 
-    file = os.listdir("./database/")
-    curDatabase = open(file[0], encoding="utf-8").read().lower()
+    files = [doc for doc in os.listdir() if doc.endswith('.txt')]
+    if len(files) == 0:
+        return 0
+    if len(queryWordsList) == 0:
+        return -1
+    # load all the path ".cpp" files on project directory.
+    curDatabase = open(files[0], encoding="utf-8").read().lower()
     # Replace punctuation by space and split
     fileWordsList = re.sub("[^\w]", " ", curDatabase).split()
     for word in fileWordsList:
@@ -64,11 +69,15 @@ def calcSimilarity():
     return d
 
 
-def deleteFileInDatabaseFolder():
-    directory = "./database"
-    files_in_directory = os.listdir(directory)
-    filtered_files = [file for file in files_in_directory if file.endswith(".txt")]
-    for file in filtered_files:
-        path_to_file = os.path.join(directory, file)
-        os.remove(path_to_file)
-
+def deleteTxtFiles():
+    files = [doc for doc in os.listdir() if doc.endswith('.txt')]
+    if len(files) > 0:
+        for f in files:
+            os.remove(f)
+# directory = "./database"
+# files_in_directory = os.listdir(directory)
+# filtered_files = [file for file in files_in_directory if file.endswith(".txt")]
+# if len(filtered_files) > 0:
+#    for file in filtered_files:
+#       path_to_file = os.path.join(directory, file)
+# os.remove(path_to_file)
