@@ -60,4 +60,9 @@ def plagBetweenQueryAndEnteredFile():
     return render_template('plagBetweenQueryAndEnteredFile.html', msg="Please, Choose a file.")
 
 
+@app.route("/about")
+def about():
+    return render_template("aboutUs.html")
+
+
 app.run()

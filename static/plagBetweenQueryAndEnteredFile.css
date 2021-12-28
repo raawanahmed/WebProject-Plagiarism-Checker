@@ -119,7 +119,6 @@ nav {
   float: none;
   clear: both;
   width: 300px;
-  height: 100%;
   background: #eee;
 }
 
@@ -162,8 +161,11 @@ nav li:nth-child(2) a {
 nav li:nth-child(3) a {
   border-left: 10px solid #f0776c;
 }
-nav li:last-child a {
+nav li:nth-child(4) a {
   border-left: 10px solid #1abc9c;
+}
+nav li:last-child a {
+  border-left: 10px solid #bc8f8f;
 }
 
 nav li a:after {
@@ -190,8 +192,11 @@ nav li:nth-child(2) a:after {
 nav li:nth-child(3) a:after {
   background: #f0776c;
 }
-nav li:last-child a:after {
+nav li:nth-child(4) a:after {
   background: #1abc9c;
+}
+nav li:last-child a:after {
+  background: #bc8f8f;
 }
 
 @font-face {
@@ -226,11 +231,13 @@ nav li:last-child a:after {
     url(http://themes.googleusercontent.com/static/fonts/lato/v6/wkfQbvfT_02e2IWO3yYueQ.woff)
       format("woff");
 }
+
 .left {
   background: #eee;
   width: 300px;
   float: left;
 }
+
 
 @import url('https://fonts.googleapis.com/css?family=Amatic+SC');
 
