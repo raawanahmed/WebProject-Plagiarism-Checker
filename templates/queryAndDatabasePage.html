@@ -13,7 +13,8 @@
             <li><a href="{{ url_for('loadPage') }}"
             >Compute the similarity between query and database file</a
             ></li>
-            <li><a href="#contact">About</a></li>
+            <li><a href="{{url_for('plagBetweenQueryAndEnteredFile')}}">Compute the similarity between query and given
+                file</a></li>
         </ul>
     </nav>
 </div>
@@ -25,7 +26,8 @@
         <br>
         <button class="btn" style="vertical-align:middle"><span>Check Plagiarism </span></button>
         <br>
-        <p> <h3>{{output}}</h3></p>
+        <p>
+        <h3>{{output}}</h3></p>
     </form>
 </div>
 </body>
