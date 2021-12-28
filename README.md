@@ -8,17 +8,24 @@ Project contains two types of plagiarism checkers
 
 3) Plagiarism Checker system that is used to detect plagiarism of the entered file with the given query.ase file.
 
-### Steps for first plagiarism
+### Steps for the first plagiarism
 1. User enters the files.
-2. Files are processed
-3. Calculations are done (Term Frequency, Cosine Similarity)
-4. The Plagiarism Percentage is returned on the web page
+2. Files are processed.
+3. Calculations are done (Term Frequency, Cosine Similarity).
+4. The Plagiarism Percentage is returned on the web page.
 
-### Steps for second plagiarism
-1. User enters a query
+### Steps for the second plagiarism
+1. User enters a query.
+2. Query gets processed (Uppercase to lowercase, Removal of punctuationmarks, etc).
+3. Calculations are done (Term Frequency, Cosine Similarity).
+4. The Plagiarism Percentage is returned on the web page.
+
+### Steps for the third plagiarism
+1. User enters a query and a file.
 2. Query gets processed (Uppercase to lowercase, Removal of punctuationmarks, etc.)
-3. Calculations are done (Term Frequency, Cosine Similarity)
-4. The Plagiarism Percentage is returned on the web page
+3. File is processed.
+4. Calculations are done (Term Frequency, Cosine Similarity).
+5. The Plagiarism Percentage is returned on the web page.
 
 ### Install required dependencies with:
 
