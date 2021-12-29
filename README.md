@@ -1,6 +1,6 @@
 ### 📜 Description:
 
-Project contains two types of plagiarism checkers
+Project contains three types of plagiarism checkers
 
 1) Plagiarism Checker system that is used to detect plagiarism in files using cosine similarity. To compute the similarity between all files on project directory , the raw data is transformed into vectors, and then to arrays of numbers and then used vectors to compute the similarity between the files and prints the percentage. 
 
