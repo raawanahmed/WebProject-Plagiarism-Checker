@@ -1,8 +1,9 @@
 import math
-import os
 import re
-from helperFunctions import calcDotProduct, calcFrequency, calcVectorMagnitude
+
 from flask import request
+
+from helperFunctions import calcDotProduct, calcFrequency, calcVectorMagnitude
 
 
 def extractQueryText(HtmlElementName):
@@ -16,35 +17,35 @@ def extractQueryText(HtmlElementName):
     for word in queryWordsList:
         allWords.add(word)
     return allWords, queryWordsList
-     # allWords -> is a set contains all words in inputQuery 
-     #  QueryWordsList ->  this is the input query after filtering it from punctuations
+    # allWords -> is a set contains all words in inputQuery
+    # QueryWordsList ->  this is the input query after filtering it from punctuations
 
-def calcSimilarity():
+
+def calcSimilarityBetweenTwoQueries():
+    firstQueryWords, firstQueryWordsList = extractQueryText('query1')
+    secondQueryWords, secondQueryWordList = extractQueryText('query2')
     allWords = set()
-    fisrtQueryWords, firstQueryWordsList = extractQueryText('query1')
-    secondQueryWords, seondQueryWordList = extractQueryText('query2')
+    allWords = firstQueryWords.union(secondQueryWords)
 
-    allWords = fisrtQueryWords.union(secondQueryWords)
-    
-    
     # TF frequency of word i in document j
-    inputQueryTF = []
+    firstInputQueryTF = []
     secondInputQueryTF = []
     for word in allWords:
-        queryTfCounter = calcFrequency(word, firstQueryWordsList)
-        secondInputQueryTFCounter = calcFrequency(word, seondQueryWordList)
-        inputQueryTF.append(queryTfCounter)
+        firstInputQueryTfCounter = calcFrequency(word, firstQueryWordsList)
+        secondInputQueryTFCounter = calcFrequency(word, secondQueryWordList)
+        firstInputQueryTF.append(firstInputQueryTfCounter)
         secondInputQueryTF.append(secondInputQueryTFCounter)
 
-    dotProduct = calcDotProduct(inputQueryTF, secondInputQueryTF)
-    queryVectorMagnitude = math.sqrt(calcVectorMagnitude(inputQueryTF))
+    dotProduct = calcDotProduct(firstInputQueryTF, secondInputQueryTF)
+    queryVectorMagnitude = math.sqrt(calcVectorMagnitude(firstInputQueryTF))
     databaseVectorMagnitude = math.sqrt(calcVectorMagnitude(secondInputQueryTF))
     matchPercentage = float(
         dotProduct / (queryVectorMagnitude * databaseVectorMagnitude)) * 100
 
-    output = "The two queries match %0.02f%% with each other." % matchPercentage
-    d = dict()
-    d['inputQuery1'] = request.form['query1']
-    d['inputQuery2'] = request.form['query2']
-    d['output'] = output
-    return d
+    percentage = "The two queries match %0.02f%% with each other." % matchPercentage
+    percentageOfPlagiarism = dict()
+    percentageOfPlagiarism['inputQuery1'] = request.form['query1']
+    percentageOfPlagiarism['inputQuery2'] = request.form['query2']
+    percentageOfPlagiarism['inputQuery2'] = request.form['query2']
+    percentageOfPlagiarism['output'] = percentage
+    return percentageOfPlagiarism

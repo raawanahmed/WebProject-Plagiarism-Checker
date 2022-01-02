@@ -16,6 +16,9 @@ def vectorize(Data):
     return TfidfVectorizer().fit_transform(Data).toarray()
 
 
+# return nd-array [[tf*idf for each txt file], etc]
+
+
 # cosine similarity to compute the Plagiarism.
 def similarity(code_1, code_2):
     return cosine_similarity([code_1, code_2])
@@ -45,23 +48,36 @@ def PlagiarismChecker(filesWithTheirVectors):
     return plagiarismResults
 
 
-def solve():
-    # Reading all ".txt" files
-    files = [doc for doc in os.listdir() if doc.endswith('.txt')]
+def extractFiles(filesPath: str):
+    txtFiles = [file for file in os.listdir(filesPath) if
+                file.endswith(".txt")]  # list of file names in files directory
+    pathOfFiles = set()
+    nameOfEachFile = set()
+    for i in range(len(txtFiles)):
+        pathOfFiles.add(filesPath + "/" + txtFiles[int(i)])
+        nameOfEachFile.add(txtFiles[int(i)])
+    return nameOfEachFile, pathOfFiles
 
-    if len(files) == 0:
+
+def calcSimilarityBetweenFiles():
+    # load all the path ".txt" files on files directory.
+    directory = os.getcwd() + "/files"
+    nameOfEachFile, files_in_directory = extractFiles(directory)
+    if len(files_in_directory) == 0:
         return -1
-    # load all the path ".txt" files on project directory.
-    fileStore = [open(_file, encoding="utf-8").read() for _file in files]
+    fileStore = [open(file, encoding="utf-8").read().lower() for file in files_in_directory]
     # Vectorize the data.
-    # The zip() function takes iterables (can be zero or more), aggregates them in a tuple, and returns it.
     vectors = vectorize(fileStore)
-    filesWithTheirVectors = list(zip(files, vectors))
+    # The zip() function takes iterables (can be zero or more), aggregates them in a tuple, and returns it.
+    filesWithTheirVectors = list(zip(nameOfEachFile, vectors))
     return PlagiarismChecker(filesWithTheirVectors)
 
 
-def deleteFiles():
-    files = [doc for doc in os.listdir() if doc.endswith('.txt')]
-    if len(files) > 0:
-        for f in files:
-            os.remove(f)
+def deleteFilesInFolderFiles():
+    directory = "./files"
+    files_in_directory = os.listdir(directory)
+    filtered_files = [file for file in files_in_directory if file.endswith(".txt")]
+    if len(filtered_files) > 0:
+        for file in filtered_files:
+            path_to_file = os.path.join(directory, file)
+            os.remove(path_to_file)

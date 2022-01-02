@@ -7,7 +7,7 @@ from flask import request
 from helperFunctions import calcDotProduct, calcFrequency, calcVectorMagnitude
 
 
-def calcSimilarity2():
+def calcSimilarityBetweenQueryAndFile():
     allWords = set()
     inputQuery = request.form['query']
     lowercaseQuery = inputQuery.lower()
@@ -21,10 +21,10 @@ def calcSimilarity2():
         return 0
     if len(queryWordsList) == 0:
         return -1
-    # load all the path ".cpp" files on project directory.
-    curDatabase = open(files[0], encoding="utf-8").read().lower()
+
+    curFile = open(files[0], encoding="utf-8").read().lower()
     # Replace punctuation by space and split
-    fileWordsList = re.sub("[^\w]", " ", curDatabase).split()
+    fileWordsList = re.sub("[^\w]", " ", curFile).split()
     for word in fileWordsList:
         allWords.add(word)
 
@@ -42,22 +42,15 @@ def calcSimilarity2():
     databaseVectorMagnitude = math.sqrt(calcVectorMagnitude(databaseTF))
     matchPercentage = float(dotProduct / (queryVectorMagnitude * databaseVectorMagnitude)) * 100
 
-    output = "Input query text matches %0.02f%% with database." % matchPercentage
-    d = dict()
-    d['inputQuery'] = inputQuery
-    d['output'] = output
-    return d
+    percentages = "Input query text matches %0.02f%% with database." % matchPercentage
+    percentageOfPlagiarism = dict()
+    percentageOfPlagiarism['inputQuery'] = inputQuery
+    percentageOfPlagiarism['output'] = percentages
+    return percentageOfPlagiarism
 
 
 def deleteTxtFiles():
     files = [doc for doc in os.listdir() if doc.endswith('.txt')]
     if len(files) > 0:
-        for f in files:
-            os.remove(f)
-# directory = "./database"
-# files_in_directory = os.listdir(directory)
-# filtered_files = [file for file in files_in_directory if file.endswith(".txt")]
-# if len(filtered_files) > 0:
-#    for file in filtered_files:
-#       path_to_file = os.path.join(directory, file)
-# os.remove(path_to_file)
+        for file in files:
+            os.remove(file)
