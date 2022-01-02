@@ -11,7 +11,7 @@
             >Compute the similarity between files</a
             ></li>
             <li><a href="{{ url_for('loadPage') }}"
-            >Compute the similarity between query and database file</a
+            >Compute the similarity between Two queries</a
             ></li>
             <li><a href="{{url_for('plagBetweenQueryAndEnteredFile')}}">Compute the similarity between query and given
                 file</a></li>
@@ -22,10 +22,11 @@
 
 <div class="main">
     <form class="mian" action="http://localhost:5000" method="POST">
-        {{msg}}
+       <p> {{msg}} </p>
         <p>Input Text : </p>
-        <p><textarea name="query" rows="8" cols="50" autofocus>{{query}}</textarea></p>
+        <p><textarea name="query1" rows="8" cols="50" autofocus>{{query1}}</textarea></p>
         <br>
+        <p><textarea name="query2" rows="8" cols="50" autofocus>{{query2}}</textarea></p>
         <button class="btn" style="vertical-align:middle"><span>Check Plagiarism </span></button>
         <br>
         <p>

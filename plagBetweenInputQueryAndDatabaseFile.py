@@ -30,7 +30,7 @@ def calcDotProduct(inputQueryTF, databaseTF):
 def calcSimilarity():
     allWords = set()
 
-    inputQuery = request.form['query']
+    inputQuery = request.form['query1']
     lowercaseQuery = inputQuery.lower()
     # Replace punctuation by space and split
     queryWordsList = re.sub("[^\w]", " ", lowercaseQuery).split()
@@ -39,8 +39,8 @@ def calcSimilarity():
     for word in queryWordsList:
         allWords.add(word)
 
-    path_to_file = os.path.join("./database", "team.txt")
-    curDatabase = open(path_to_file, "r").read().lower()
+    # path_to_file = os.path.join("./database", "team.txt")
+    curDatabase = request.form['query2']
     # Replace punctuation by space and split
     databaseWordsList = re.sub("[^\w]", " ", curDatabase).split()
     for word in databaseWordsList:
@@ -58,9 +58,10 @@ def calcSimilarity():
     dotProduct = calcDotProduct(inputQueryTF, databaseTF)
     queryVectorMagnitude = math.sqrt(calcVectorMagnitude(inputQueryTF))
     databaseVectorMagnitude = math.sqrt(calcVectorMagnitude(databaseTF))
-    matchPercentage = float(dotProduct / (queryVectorMagnitude * databaseVectorMagnitude)) * 100
+    matchPercentage = float(
+        dotProduct / (queryVectorMagnitude * databaseVectorMagnitude)) * 100
 
-    output = "Input query text matches %0.02f%% with database." % matchPercentage
+    output = "The two queries matches %0.02f%% with each other." % matchPercentage
     d = dict()
     d['inputQuery'] = inputQuery
     d['output'] = output
