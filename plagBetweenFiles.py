@@ -6,7 +6,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 # files = []
 # for file in os.listdir():
-#    if file.endswith('.cpp'):
+#    if file.endswith('.txt'):
 #        files.append(file)
 
 plagiarismResults = set()
@@ -46,12 +46,12 @@ def PlagiarismChecker(filesWithTheirVectors):
 
 
 def solve():
-    # Reading all ".cpp" files
-    files = [doc for doc in os.listdir() if doc.endswith('.cpp')]
+    # Reading all ".txt" files
+    files = [doc for doc in os.listdir() if doc.endswith('.txt')]
 
     if len(files) == 0:
-        return 0
-    # load all the path ".cpp" files on project directory.
+        return -1
+    # load all the path ".txt" files on project directory.
     fileStore = [open(_file, encoding="utf-8").read() for _file in files]
     # Vectorize the data.
     # The zip() function takes iterables (can be zero or more), aggregates them in a tuple, and returns it.
@@ -61,7 +61,7 @@ def solve():
 
 
 def deleteFiles():
-    files = [doc for doc in os.listdir() if doc.endswith('.cpp')]
+    files = [doc for doc in os.listdir() if doc.endswith('.txt')]
     if len(files) > 0:
         for f in files:
             os.remove(f)

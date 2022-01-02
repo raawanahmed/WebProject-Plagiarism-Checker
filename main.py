@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 
 from plagBetweenFiles import *
-from plagBetweenInputQueryAndDatabaseFile import *
+from plagBetweenTwoInputQueries import *
 from plagBetweenQueryAndEnteredFile import *
 import os
 
@@ -16,7 +16,7 @@ app.config["UPLOAD_PATH"] = os.getcwd()
 def upload_file():
     if request.method == 'POST' and request.form.get('action1') == 'Show Results':
         plagiarismRes = solve()
-        if plagiarismRes == 0:
+        if plagiarismRes == -1:
             return render_template("uploadFiles.html", msg="There are no files chosen.")
         return render_template('resultsPage.html', plagiarismRes=plagiarismRes)
     if request.method == 'POST':
@@ -28,22 +28,22 @@ def upload_file():
 
 @app.route("/")
 def Home():
-    deleteFiles()
+    deleteFiles() # delete uploaded files to be able to upload new files
     deleteTxtFiles()
     return render_template("homePage.html")
 
 
 @app.route("/loadPage")
 def loadPage():
-    return render_template('queryAndDatabasePage.html', query="")
+    return render_template('twoQueriesPage.html', query1="", query2 = "" )
 
 
 @app.route("/", methods=['POST'])
-def plagBetweenInputQueryAndDatabaseFile():
+def plagBetweenTwoInputQueries():
     d = calcSimilarity()
-    if d == 0:
-        return render_template("queryAndDatabasePage.html", msg="There is no query entered.")
-    return render_template('queryAndDatabasePage.html', query=d['inputQuery'], output=d['output'])
+    if d == -1:
+        return render_template("twoQueriesPage.html", msg="There is no query entered.")
+    return render_template('twoQueriesPage.html', query1=d['inputQuery1'], query2 = d['inputQuery2'], output=d['output'])
 
 
 @app.route("/QueryAndEnteredFile", methods=["GET", "POST"])
