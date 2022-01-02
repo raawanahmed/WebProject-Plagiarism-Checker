@@ -1,6 +1,6 @@
 <html>
 <head>
-    <link href="{{ url_for('static', filename='queryAndDatabasePage.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='twoQueriesPage.css') }}" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="left">
@@ -21,8 +21,8 @@
 </div>
 
 <div class="main">
-    <form class="mian" action="http://localhost:5000" method="POST">
-       <p> {{msg}} </p>
+    <form class="mian" action="{{url_for('plagBetweenTwoInputQueries')}}" method="POST">
+        <p> {{msg}} </p>
         <p>Input Text : </p>
         <p><textarea name="query1" rows="8" cols="50" autofocus>{{query1}}</textarea></p>
         <br>

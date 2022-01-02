@@ -11,7 +11,7 @@
             >Compute the similarity between files</a
             ></li>
             <li><a href="{{ url_for('loadPage') }}"
-            >Compute the similarity between query and database file</a
+            >Compute the similarity between Two queries</a
             ></li>
             <li><a href="{{url_for('plagBetweenQueryAndEnteredFile')}}">Compute the similarity between query and given
                 file</a></li>
@@ -25,19 +25,17 @@
 
     <p>There are three types of plagiarism checkers</p>
     <p>
-        1) Plagiarism Checker system that is used to detect plagiarism in files
-        using cosine similarity. To compute the similarity between all files on
-        project directory , the raw data is transformed into vectors, and then
-        to arrays of numbers and then used vectors to compute the similarity
-        between the files and prints the percentage.
+        1) Plagiarism Checker system to detect plagiarism in files using cosine similarity.
+        So to compute the similarity between all files on the project directory,
+        the raw data is transformed into vectors, then to arrays of numbers,
+        and then used vectors to compute the similarity between the files and print the percentage.
     </p>
     <p>
         2) Plagiarism Checker using Python-Flask. TF-IDF and
-        cosine similarity. It checks for how similar the query is to the
-        existing database file.
+        cosine similarity. It checks the similarity between two inputs queries.
     </p>
     <p>
-        3) Plagiarism Checker system that is used to detect plagiarism of the entered file with the given query.
+        3) Plagiarism Checker system to detect plagiarism of the entered file with the entered query.
     </p>
     <p>Thank you.</p>
 </div>

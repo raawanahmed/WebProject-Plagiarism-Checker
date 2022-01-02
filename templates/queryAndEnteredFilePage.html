@@ -1,6 +1,6 @@
 <html>
 <head>
-    <link href="{{ url_for('static', filename='plagBetweenQueryAndEnteredFile.css') }}" rel="stylesheet"
+    <link href="{{ url_for('static', filename='queryAndEnteredFilePage.css') }}" rel="stylesheet"
           type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
@@ -13,7 +13,7 @@
             >Compute the similarity between files</a
             ></li>
             <li><a href="{{ url_for('loadPage') }}"
-            >Compute the similarity between query and database file</a
+            >Compute the similarity between Two queries</a
             ></li>
             <li><a href="{{url_for('plagBetweenQueryAndEnteredFile')}}">Compute the similarity between query and given
                 file</a></li>
@@ -22,21 +22,14 @@
     </nav>
 </div>
 <div class="main">
-    
+
     <form method="POST" enctype="multipart/form-data">
         <p> {{msg}} </p>
-        
+
         <div class="row">
-            <div class="col s12">    
+            <div class="col s12">
                 <!-- Uploader Dropzone -->
                 <div id="zdrop" class="fileuploader ">
-                    <form method="POST">
-                        <p>Input Text : </p>
-                        <p><textarea name="query" rows="8" cols="50" autofocus>{{query}}</textarea></p>
-                        
-                        <p>
-                        <h3>{{output}}</h3></p>
-                    </form>
                     <div id="upload-label" style="width: 200px;">
                         <i class="material-icons">cloud_upload</i>
                         <input type="file" name="file"/>
@@ -65,22 +58,25 @@
                                    class="btn-floating ph red white-text waves-effect waves-light"><i
                                         class="material-icons white-text">clear</i></a>
                             </div>
-                           
                         </div>
                     </div>
                 </div>
-             
             </div>
-           
         </div>
         <br/>
-        <button class="btn" style="vertical-align:middle"><span>Submit</span></button>
-        <input class="sub" type="submit" value="Show Results" name="action2"/>
+        <form method="POST">
+            <p>Input Text : </p>
+            <p><textarea name="query" rows="8" cols="50" autofocus>{{query}}</textarea></p>
+
+            <button class="btn" style="vertical-align:middle"><span>Submit</span></button>
+            <input class="sub" type="submit" value="Show Results" name="action2"/>
+            <p>
+            <h3>{{output}}</h3></p>
+        </form>
         <br/>
     </form>
 </div>
 <div>
-    
 </div>
 </body>
 </html>

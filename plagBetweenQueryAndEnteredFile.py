@@ -1,10 +1,10 @@
 import math
 import os
 import re
-from helperFunctions import calcDotProduct, calcFrequency, calcVectorMagnitude
+
 from flask import request
 
-
+from helperFunctions import calcDotProduct, calcFrequency, calcVectorMagnitude
 
 
 def calcSimilarity2():
