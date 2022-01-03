@@ -44,13 +44,5 @@ def calcSimilarityBetweenQueryAndFile():
 
     percentages = "Input query text matches %0.02f%% with database." % matchPercentage
     percentageOfPlagiarism = dict()
-    percentageOfPlagiarism['inputQuery'] = inputQuery
     percentageOfPlagiarism['output'] = percentages
     return percentageOfPlagiarism
-
-
-def deleteTxtFiles():
-    files = [doc for doc in os.listdir() if doc.endswith('.txt')]
-    if len(files) > 0:
-        for file in files:
-            os.remove(file)

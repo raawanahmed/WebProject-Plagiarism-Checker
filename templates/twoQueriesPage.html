@@ -10,7 +10,7 @@
             <li><a href="{{ url_for('plagBetweenFiles') }}"
             >Compute the similarity between files</a
             ></li>
-            <li><a href="{{ url_for('loadPage') }}"
+            <li><a href="{{ url_for('loadTwoInputFilesPage') }}"
             >Compute the similarity between Two queries</a
             ></li>
             <li><a href="{{url_for('plagBetweenQueryAndEnteredFile')}}">Compute the similarity between query and given
@@ -22,12 +22,13 @@
 
 <div class="main">
     <form class="mian" action="{{url_for('plagBetweenTwoInputQueries')}}" method="POST">
-        <p> {{msg}} </p>
+        <p style="color: red;"> {{warningMessage}} </p>
+        <p style="color: black;"> {{greetingMessage}} </p>
         <p>Input Text : </p>
         <p><textarea name="query1" rows="8" cols="50" autofocus>{{query1}}</textarea></p>
         <br>
         <p><textarea name="query2" rows="8" cols="50" autofocus>{{query2}}</textarea></p>
-        <button class="btn" style="vertical-align:middle"><span>Check Plagiarism </span></button>
+        <button class="btn" style="vertical-align:middle"><span> Submit </span></button>
         <br>
         <p>
         <h3>{{output}}</h3></p>

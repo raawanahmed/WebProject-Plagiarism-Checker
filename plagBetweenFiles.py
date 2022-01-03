@@ -4,10 +4,8 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-# files = []
-# for file in os.listdir():
-#    if file.endswith('.txt'):
-#        files.append(file)
+from helperFunctions import extractFiles
+
 
 plagiarismResults = set()
 
@@ -48,16 +46,6 @@ def PlagiarismChecker(filesWithTheirVectors):
     return plagiarismResults
 
 
-def extractFiles(filesPath: str):
-    txtFiles = [file for file in os.listdir(filesPath) if
-                file.endswith(".txt")]  # list of file names in files directory
-    pathOfFiles = set()
-    nameOfEachFile = set()
-    for i in range(len(txtFiles)):
-        pathOfFiles.add(filesPath + "/" + txtFiles[int(i)])
-        nameOfEachFile.add(txtFiles[int(i)])
-    return nameOfEachFile, pathOfFiles
-
 
 def calcSimilarityBetweenFiles():
     # load all the path ".txt" files on files directory.
@@ -71,13 +59,3 @@ def calcSimilarityBetweenFiles():
     # The zip() function takes iterables (can be zero or more), aggregates them in a tuple, and returns it.
     filesWithTheirVectors = list(zip(nameOfEachFile, vectors))
     return PlagiarismChecker(filesWithTheirVectors)
-
-
-def deleteFilesInFolderFiles():
-    directory = "./files"
-    files_in_directory = os.listdir(directory)
-    filtered_files = [file for file in files_in_directory if file.endswith(".txt")]
-    if len(filtered_files) > 0:
-        for file in filtered_files:
-            path_to_file = os.path.join(directory, file)
-            os.remove(path_to_file)

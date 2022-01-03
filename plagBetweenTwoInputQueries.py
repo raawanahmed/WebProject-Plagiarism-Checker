@@ -1,31 +1,18 @@
 import math
-import re
 
 from flask import request
 
-from helperFunctions import calcDotProduct, calcFrequency, calcVectorMagnitude
-
-
-def extractQueryText(HtmlElementName):
-    allWords = set()
-    inputQuery = request.form[HtmlElementName]
-    inputQuery = inputQuery.lower()
-    # Replace punctuation by space and split
-    inputWordsList = re.sub("[^\w]", " ", inputQuery).split()
-    if len(inputWordsList) == 0:
-        return -1, -1
-    for word in inputWordsList:
-        allWords.add(word)
-    return allWords, inputWordsList
-    # allWords -> is a set contains all words in inputQuery
-    # inputWordsList ->  this is the input query after filtering it from punctuations
-
+from helperFunctions import calcDotProduct, calcFrequency, calcVectorMagnitude, extractQueryText
 
 def calcSimilarityBetweenTwoQueries():
     firstInputWords, firstInputWordsList = extractQueryText('query1')
     secondInputWords, secondInputWordsList = extractQueryText('query2')
+
+    #check if data is present in both queries 
     if firstInputWords == -1 or secondInputWords == -1:
         return -1
+
+
     allWords = set()
     allWords = firstInputWords.union(secondInputWords)
 
@@ -40,7 +27,7 @@ def calcSimilarityBetweenTwoQueries():
         if word in secondInputWordsList:
             cnt += 1
         idf = math.log10(2*1.0/cnt*1.0)
-        print("////////", idf)
+
         if idf == 0:
             idf = 1
         secondInputTFCounter = calcFrequency(word, secondInputWordsList)*idf

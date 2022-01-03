@@ -1,30 +1,41 @@
 <html>
-<head>
-    <link href="{{ url_for('static', filename='homePage.css') }}" rel="stylesheet" type="text/css">
-</head>
-<body>
-<div class="left">
-    <nav>
+  <head>
+    <link
+      href="{{ url_for('static', filename='homePage.css') }}"
+      rel="stylesheet"
+      type="text/css"
+    />
+  </head>
+  <body>
+    <div class="left">
+      <nav>
         <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="{{ url_for('plagBetweenFiles') }}"
-            >Compute the similarity between files</a
-            ></li>
-            <li><a href="{{ url_for('loadPage') }}"
-            >Compute the similarity between Two queries</a
-            ></li>
-            <li><a href="{{url_for('plagBetweenQueryAndEnteredFile')}}">Compute the similarity between query and given
-                file</a></li>
-            <li><a href="{{url_for('about')}}">About Us</a></li>
+          <li><a href="/">Home</a></li>
+          <li>
+            <a href="{{ url_for('plagBetweenFiles') }}"
+              >Compute the similarity between files</a
+            >
+          </li>
+          <li>
+            <a href="{{ url_for('loadTwoInputFilesPage') }}"
+              >Compute the similarity between Two queries</a
+            >
+          </li>
+          <li>
+            <a href="{{url_for('plagBetweenQueryAndEnteredFile')}}"
+              >Compute the similarity between query and given file</a
+            >
+          </li>
+          <li><a href="{{url_for('about')}}">About Us</a></li>
         </ul>
-    </nav>
-</div>
-<div class="main">
-    <ul>
+      </nav>
+    </div>
+    <div class="main">
+      <ul>
         {% for i in results %}
         <li>{{ i }}</li>
         {% endfor %}
-    </ul>
-</div>
-</body>
+      </ul>
+    </div>
+  </body>
 </html>
