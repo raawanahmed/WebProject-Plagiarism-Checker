@@ -4,23 +4,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="left">
-    <nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="{{ url_for('plagBetweenFiles') }}"
-            >Compute the similarity between files</a
-            ></li>
-            <li><a href="{{ url_for('loadTwoInputFilesPage') }}"
-            >Compute the similarity between Two queries</a
-            ></li>
-            <li><a href="{{url_for('plagBetweenQueryAndEnteredFile')}}">Compute the similarity between query and given
-                file</a></li>
-            <li><a href="{{url_for('about')}}">About Us</a></li>
-        </ul>
-    </nav>
-</div>
-
+    <div class="left">
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="{{ url_for('plagBetweenFiles') }}"
+                >Compute the similarity between files</a
+                ></li>
+                <li><a href="{{ url_for('loadTwoInputFilesPage') }}"
+                >Compute the similarity between two text inputs </a
+                ></li>
+                <li><a href="{{url_for('plagBetweenQueryAndEnteredFile')}}">Compute the similarity between a text input and a file</a></li>
+                <li><a href="{{url_for('about')}}">About Us</a></li>
+            </ul>
+        </nav>
+    </div>
 <div class="container">
     <div class="card">
         <h1 class="title">Designed By</h1>
