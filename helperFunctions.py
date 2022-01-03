@@ -76,6 +76,9 @@ def deleteUserInputFiles():
     #delete all files that the user may have input while checking
     #for plagiarism if they exist
     directory = "./files"
+    if not os.path.exists(directory):
+        return
+        
     files_in_directory = os.listdir(directory)
     filtered_files = [file for file in files_in_directory if file.endswith(".txt")]
     if len(filtered_files) > 0:
