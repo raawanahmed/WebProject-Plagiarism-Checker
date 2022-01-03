@@ -91,7 +91,7 @@ def deleteUserInputFiles():
 
 def cosineSimilarity(listOfWords1, listOfWords2):
     dot_product = calcDotProduct(listOfWords1, listOfWords2)
-    magnitude_x = np.sqrt(np.sum(listOfWords1 ** 2))
-    magnitude_y = np.sqrt(np.sum(listOfWords2 ** 2))
-    cos_similarity = dot_product / (magnitude_x * magnitude_y)
+    magnitudeOfListOfWords1 = np.sqrt(np.sum(listOfWords1 ** 2))
+    magnitudeOfListOfWords2 = np.sqrt(np.sum(listOfWords2 ** 2))
+    cos_similarity = dot_product / (magnitudeOfListOfWords1 * magnitudeOfListOfWords2)
     return cos_similarity

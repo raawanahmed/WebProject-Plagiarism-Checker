@@ -43,5 +43,5 @@ def calcSimilarityBetweenTwoQueries():
     matchPercentage = float(
         dotProduct / (queryVectorMagnitude * secondInputVectorMagnitude)) * 100
 
-    percentage = "The two queries match %0.02f%% with each other." % matchPercentage
-    return percentage, request.form['query1'], request.form['query2']
+    percentageOfPlagiarism = "The two queries match %0.02f%% with each other." % matchPercentage
+    return percentageOfPlagiarism, request.form['query1'], request.form['query2']
