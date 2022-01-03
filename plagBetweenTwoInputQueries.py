@@ -1,6 +1,7 @@
 import math
 
 from flask import request
+from Constants import ERROR_NO_INPUT
 
 from helperFunctions import calcDotProduct, calcFrequency, calcVectorMagnitude, extractQueryText
 
@@ -10,7 +11,7 @@ def calcSimilarityBetweenTwoQueries():
 
     #check if data is present in both queries 
     if firstInputWords == -1 or secondInputWords == -1:
-        return -1
+        return ERROR_NO_INPUT
 
 
     allWords = set()

@@ -1,15 +1,9 @@
-from flask import request
+from flask import request, render_template
 import re
 import os
 
 
-#CONSTANTS
 
-NO_FILES_CHOSEN = "No files have been chosen."
-NO_INPUT_SUBMITTED =  "No input has been submitted."
-FILES_SUCCESSFULLY_UPLOADED = "Files have been uploaded successfully."
-CHOOSE_FILES_TO_BE_SUBMITTED = "Choose the files to submit."
-CHOOSE_FILE_AND_INPUT_TEXT = "Choose a file and input some text to submit"
 def calcFrequency(word, wordsList):
     freq = 0
     for w in wordsList:
@@ -60,11 +54,15 @@ def extractQueryText(htmlElementName: str):
     # inputWordsList ->  this is the input query after filtering it from punctuations
 
 
-def clearAllPreExistingFiles():
+def clearAllExistingFiles():
     deleteUserInputFiles()  # delete files that have been uploaded when comparing multiple files
     deleteTxtFiles()        # delete files that have been uploaded when comparing input text with a file
 
-
+def renderPage(fileName = "", query="", query1="", query2="", output="", warningMessage="", greetingMessage="", results=""):
+    #clear all input files is there were any, then render the html page
+    clearAllExistingFiles()
+    return render_template(fileName, query=query, query1=query1, query2=query2, output=output, 
+            warningMessage=warningMessage, greetingMessage=greetingMessage, results=results)
 
 def deleteTxtFiles():
     files = [doc for doc in os.listdir() if doc.endswith('.txt')]

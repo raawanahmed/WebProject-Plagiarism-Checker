@@ -3,6 +3,7 @@ import os
 import re
 
 from flask import request
+from Constants import ERROR_NO_FILES, ERROR_NO_INPUT
 
 from helperFunctions import calcDotProduct, calcFrequency, calcVectorMagnitude
 
@@ -18,9 +19,9 @@ def calcSimilarityBetweenQueryAndFile():
 
     files = [doc for doc in os.listdir() if doc.endswith('.txt')]
     if len(files) == 0:
-        return 0
+        return ERROR_NO_FILES
     if len(queryWordsList) == 0:
-        return -1
+        return ERROR_NO_INPUT
 
     curFile = open(files[0], encoding="utf-8").read().lower()
     # Replace punctuation by space and split

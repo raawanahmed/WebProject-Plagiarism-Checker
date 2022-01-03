@@ -1,5 +1,6 @@
-from flask import Flask, render_template
-from helperFunctions import CHOOSE_FILE_AND_INPUT_TEXT, CHOOSE_FILES_TO_BE_SUBMITTED, FILES_SUCCESSFULLY_UPLOADED, NO_FILES_CHOSEN, NO_INPUT_SUBMITTED, clearAllPreExistingFiles, deleteUserInputFiles
+from flask import Flask
+from Constants import CHOOSE_FILE_AND_INPUT_TEXT, CHOOSE_FILES_TO_BE_SUBMITTED, ERROR_ONE_FILE_ONLY, FILES_SUCCESSFULLY_UPLOADED, NO_FILES_CHOSEN, NO_INPUT_SUBMITTED, ONLY_ONE_FILE_CHOSEN
+from helperFunctions import deleteUserInputFiles, renderPage
 
 from plagBetweenFiles import *
 from plagBetweenQueryAndEnteredFile import *
@@ -17,32 +18,33 @@ def plagBetweenFiles():
             try:
                 f.save(os.path.join(app.config["UPLOAD_PATH"], f.filename))
             except:
-                return render_template("uploadFilesPage.html", warningMessage=NO_FILES_CHOSEN, greetingMessage="")
+                return renderPage(fileName="uploadFilesPage.html", warningMessage=NO_FILES_CHOSEN, greetingMessage="")
         percentageOfPlagiarism = calcSimilarityBetweenFiles()
-        if percentageOfPlagiarism == -1:
-            return render_template("uploadFilesPage.html", warningMessage=NO_FILES_CHOSEN, greetingMessage="")
-        return render_template('resultsOfPlagBetweenFilesPage.html', results=percentageOfPlagiarism)
+        if percentageOfPlagiarism == ERROR_NO_FILES:
+            return renderPage(fileName="uploadFilesPage.html", warningMessage=NO_FILES_CHOSEN, greetingMessage="")
+        if percentageOfPlagiarism == ERROR_ONE_FILE_ONLY:
+            return renderPage(fileName="uploadFilesPage.html", warningMessage=ONLY_ONE_FILE_CHOSEN, greetingMessage="")
+        return renderPage(fileName='resultsOfPlagBetweenFilesPage.html', results=percentageOfPlagiarism)
 
-    return render_template("uploadFilesPage.html", warningMessage="", greetingMessage=CHOOSE_FILES_TO_BE_SUBMITTED)
+    return renderPage(fileName="uploadFilesPage.html", warningMessage="", greetingMessage=CHOOSE_FILES_TO_BE_SUBMITTED)
 
 
 @app.route("/")
 def Home():
-    clearAllPreExistingFiles()
-    return render_template("homePage.html")
+    return renderPage(fileName="homePage.html")
 
 
 @app.route("/TwoInputFiles", methods=['GET'])
 def loadTwoInputFilesPage():
-    return render_template('twoQueriesPage.html', query1="", query2="")
+    return renderPage(fileName='twoQueriesPage.html', query1="", query2="")
 
 
 @app.route("/TwoInputQueries", methods=['POST'])
 def plagBetweenTwoInputQueries():
     percentageOfPlagiarism = calcSimilarityBetweenTwoQueries()
-    if percentageOfPlagiarism == -1:
-        return render_template("twoQueriesPage.html", warningMessage=NO_INPUT_SUBMITTED, greetingMessage="")
-    return render_template('twoQueriesPage.html', query1=percentageOfPlagiarism['inputQuery1'],
+    if percentageOfPlagiarism == ERROR_NO_INPUT:
+        return renderPage(fileName="twoQueriesPage.html", warningMessage=NO_INPUT_SUBMITTED, greetingMessage="")
+    return renderPage(fileName='twoQueriesPage.html', query1=percentageOfPlagiarism['inputQuery1'],
                            query2=percentageOfPlagiarism['inputQuery2'], output=percentageOfPlagiarism['output'])
 
 
@@ -57,29 +59,23 @@ def plagBetweenQueryAndEnteredFile():
         try:
             f.save(os.path.join(app.config["UPLOAD_PATH2"], f.filename))
         except:
-            return render_template("queryAndEnteredFilePage.html", warningMessage=NO_FILES_CHOSEN, greetingMessage="", query = request.form['query'])
+            return renderPage(fileName="queryAndEnteredFilePage.html", warningMessage=NO_FILES_CHOSEN, greetingMessage="", query = request.form['query'])
 
 
         percentageOfPlagiarism = calcSimilarityBetweenQueryAndFile()
-        if percentageOfPlagiarism == 0:
-            # clearAllPreExistingFiles()
-            return render_template("queryAndEnteredFilePage.html", warningMessage=NO_FILES_CHOSEN, greetingMessage="", query = request.form['query'])
-        if percentageOfPlagiarism == -1:
-            # clearAllPreExistingFiles()
-            return render_template("queryAndEnteredFilePage.html", warningMessage=NO_INPUT_SUBMITTED,  greetingMessage="",)
+        if percentageOfPlagiarism == ERROR_NO_FILES:
+            return renderPage(fileName="queryAndEnteredFilePage.html", warningMessage=NO_FILES_CHOSEN, greetingMessage="", query = request.form['query'])
+        if percentageOfPlagiarism == ERROR_NO_INPUT:
+            return renderPage(fileName="queryAndEnteredFilePage.html", warningMessage=NO_INPUT_SUBMITTED,  greetingMessage="")
 
-        # clearAllPreExistingFiles()
-        return render_template('queryAndEnteredFilePage.html', query=request.form['query'],
+        return renderPage(fileName='queryAndEnteredFilePage.html', query=request.form['query'],
                                output=percentageOfPlagiarism['output'])
-
-    # clearAllPreExistingFiles()
-    return render_template('queryAndEnteredFilePage.html', warningMessage="", greetingMessage=CHOOSE_FILE_AND_INPUT_TEXT)
+    return renderPage(fileName='queryAndEnteredFilePage.html', warningMessage="", greetingMessage=CHOOSE_FILE_AND_INPUT_TEXT)
 
 
 @app.route("/about")
 def about():
-    # clearAllPreExistingFiles()
-    return render_template("aboutUsPage.html")
+    return renderPage(fileName="aboutUsPage.html")
 
 
 app.run()

@@ -3,6 +3,7 @@ import os
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+from Constants import ERROR_NO_FILES, ERROR_ONE_FILE_ONLY
 
 from helperFunctions import extractFiles
 
@@ -52,7 +53,9 @@ def calcSimilarityBetweenFiles():
     directory = os.getcwd() + "/files"
     nameOfEachFile, files_in_directory = extractFiles(directory)
     if len(files_in_directory) == 0:
-        return -1
+        return ERROR_NO_FILES
+    if len(files_in_directory) == 1:
+        return ERROR_ONE_FILE_ONLY
     fileStore = [open(file, encoding="utf-8").read().lower() for file in files_in_directory]
     # Vectorize the data.
     vectors = vectorize(fileStore)
