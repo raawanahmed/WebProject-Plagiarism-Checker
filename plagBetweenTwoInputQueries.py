@@ -22,15 +22,16 @@ def calcSimilarityBetweenTwoQueries():
     secondInputTF = []
     for word in allWords:
         cnt = 0
-        firstInputInputTfCounter = calcFrequency(word, firstInputWordsList)
+      
         if word in firstInputWordsList:
             cnt += 1
         if word in secondInputWordsList:
             cnt += 1
-        idf = math.log10(2*1.0/cnt*1.0)
+        idf = math.log(2*1.0/cnt*1.0)
 
         if idf == 0:
             idf = 1
+        firstInputInputTfCounter = calcFrequency(word, firstInputWordsList) * idf    
         secondInputTFCounter = calcFrequency(word, secondInputWordsList)*idf
         firstInputTF.append(firstInputInputTfCounter)
         secondInputTF.append(secondInputTFCounter)
