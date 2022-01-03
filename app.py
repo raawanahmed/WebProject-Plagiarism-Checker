@@ -1,5 +1,5 @@
 from flask import Flask
-from Constants import CHOOSE_FILE_AND_INPUT_TEXT, CHOOSE_FILES_TO_BE_SUBMITTED, ERROR_ONE_FILE_ONLY, FILES_SUCCESSFULLY_UPLOADED, NO_FILES_CHOSEN, NO_INPUT_SUBMITTED, ONLY_ONE_FILE_CHOSEN
+from Constants import CHOOSE_FILE_AND_INPUT_TEXT, CHOOSE_FILES_TO_BE_SUBMITTED, EMPTY_FILE_SUBMITTED, ERROR_ONE_FILE_ONLY, FILES_SUCCESSFULLY_UPLOADED, NO_FILES_CHOSEN, NO_INPUT_SUBMITTED, ONLY_ONE_FILE_CHOSEN
 from helperFunctions import deleteUserInputFiles, renderPage
 
 from plagBetweenFiles import *
@@ -8,7 +8,7 @@ from plagBetweenTwoInputQueries import *
 
 app = Flask("__name__")
 
-app.config["UPLOAD_PATH"] = os.getcwd() + "/files"
+app.config["filesDirectory"] = os.getcwd() + "/files"
 
 
 @app.route("/upload_file", methods=["GET", "POST"])
@@ -16,9 +16,9 @@ def plagBetweenFiles():
     if request.method == 'POST':
         for f in request.files.getlist('file_name'):
             try:
-                if not os.path.exists(app.config["UPLOAD_PATH"] ):
-                    os.makedirs(app.config["UPLOAD_PATH"] )
-                f.save(os.path.join(app.config["UPLOAD_PATH"], f.filename))
+                if not os.path.exists(app.config["filesDirectory"] ):
+                    os.makedirs(app.config["filesDirectory"] )
+                f.save(os.path.join(app.config["filesDirectory"], f.filename))
             except:
                 return renderPage(fileName="uploadFilesPage.html", warningMessage=NO_FILES_CHOSEN, greetingMessage="")
         percentageOfPlagiarism = calcSimilarityBetweenFiles()
@@ -26,6 +26,8 @@ def plagBetweenFiles():
             return renderPage(fileName="uploadFilesPage.html", warningMessage=NO_FILES_CHOSEN, greetingMessage="")
         if percentageOfPlagiarism == ERROR_ONE_FILE_ONLY:
             return renderPage(fileName="uploadFilesPage.html", warningMessage=ONLY_ONE_FILE_CHOSEN, greetingMessage="")
+        if percentageOfPlagiarism == ERROR_EMPTY_FILE:
+            return renderPage(fileName="uploadFilesPage.html", warningMessage=EMPTY_FILE_SUBMITTED, greetingMessage="")
         return renderPage(fileName='resultsOfPlagBetweenFilesPage.html', results=percentageOfPlagiarism)
 
     return renderPage(fileName="uploadFilesPage.html", warningMessage="", greetingMessage=CHOOSE_FILES_TO_BE_SUBMITTED)
@@ -51,7 +53,7 @@ def plagBetweenTwoInputQueries():
 
 
 
-app.config["UPLOAD_PATH2"] = os.getcwd()
+app.config["projectDirectory"] = os.getcwd()
 
 @app.route("/QueryAndEnteredFile", methods=["GET", "POST"])
 def plagBetweenQueryAndEnteredFile():       
@@ -59,7 +61,7 @@ def plagBetweenQueryAndEnteredFile():
 
         f = request.files['file']
         try:
-            f.save(os.path.join(app.config["UPLOAD_PATH2"], f.filename))
+            f.save(os.path.join(app.config["projectDirectory"], f.filename))
         except:
             return renderPage(fileName="queryAndEnteredFilePage.html", warningMessage=NO_FILES_CHOSEN, greetingMessage="", query = request.form['query'])
 
@@ -67,6 +69,8 @@ def plagBetweenQueryAndEnteredFile():
         percentageOfPlagiarism = calcSimilarityBetweenQueryAndFile()
         if percentageOfPlagiarism == ERROR_NO_FILES:
             return renderPage(fileName="queryAndEnteredFilePage.html", warningMessage=NO_FILES_CHOSEN, greetingMessage="", query = request.form['query'])
+        if percentageOfPlagiarism == ERROR_EMPTY_FILE:
+            return renderPage(fileName="queryAndEnteredFilePage.html", warningMessage=EMPTY_FILE_SUBMITTED, greetingMessage="", query = request.form['query'])
         if percentageOfPlagiarism == ERROR_NO_INPUT:
             return renderPage(fileName="queryAndEnteredFilePage.html", warningMessage=NO_INPUT_SUBMITTED,  greetingMessage="")
 

@@ -1,7 +1,7 @@
 import os
 
 from sklearn.feature_extraction.text import TfidfVectorizer
-from Constants import ERROR_NO_FILES, ERROR_ONE_FILE_ONLY
+from Constants import ERROR_EMPTY_FILE, ERROR_NO_FILES, ERROR_ONE_FILE_ONLY
 
 from helperFunctions import extractFiles, cosineSimilarity
 
@@ -41,6 +41,9 @@ def calcSimilarityBetweenFiles():
     # fileStore=[["hi", "there"], ["", ""], ["", ""]]   
     fileStore = [open(file, encoding="utf-8").read().lower()
                  for file in files_in_directory]
+    for fileData in fileStore:
+        if len(fileData) == 0:
+            return ERROR_EMPTY_FILE
     # Vectorize the data.
     vectors = vectorize(fileStore)
     # The zip() function takes iterables (can be zero or more), aggregates them in a tuple, and returns it.

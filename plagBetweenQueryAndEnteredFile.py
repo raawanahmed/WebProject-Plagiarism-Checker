@@ -3,7 +3,7 @@ import os
 import re
 from helperFunctions import extractQueryText
 from flask import request
-from Constants import ERROR_NO_FILES, ERROR_NO_INPUT
+from Constants import ERROR_EMPTY_FILE, ERROR_NO_FILES, ERROR_NO_INPUT
 
 from helperFunctions import calcDotProduct, calcFrequency, calcVectorMagnitude
 
@@ -23,6 +23,8 @@ def calcSimilarityBetweenQueryAndFile():
 
     # read the file and convert all its words to lowercase letters
     curFile = open(files[0], encoding="utf-8").read().lower()
+    if len(curFile) == 0:
+        return ERROR_EMPTY_FILE
     # Replace punctuation by space and split
     fileWordsList = re.sub("[^\w]", " ", curFile).split()
 
