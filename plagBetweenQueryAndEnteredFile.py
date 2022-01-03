@@ -1,7 +1,7 @@
 import math
 import os
 import re
-
+from helperFunctions import extractQueryText
 from flask import request
 from Constants import ERROR_NO_FILES, ERROR_NO_INPUT
 
@@ -9,24 +9,21 @@ from helperFunctions import calcDotProduct, calcFrequency, calcVectorMagnitude
 
 
 def calcSimilarityBetweenQueryAndFile():
-    allWords = set()
-    inputQuery = request.form['query']
-    lowercaseQuery = inputQuery.lower()
-    # Replace punctuation by space and split
-    queryWordsList = re.sub("[^\w]", " ", lowercaseQuery).split()
-    for word in queryWordsList:
-        allWords.add(word)
+    # allWords is a "set" that will store each word in both the file and the text
+    allWords, queryWordsList  = extractQueryText('query')
 
-    files = [doc for doc in os.listdir() if doc.endswith('.txt')]
+    files = [doc for doc in os.listdir() if doc.endswith('.txt')] 
+    # check that the user enetered text and uploaded a file 
     if len(files) == 0:
         return ERROR_NO_FILES
     if len(queryWordsList) == 0:
         return ERROR_NO_INPUT
 
-    curFile = open(files[0], encoding="utf-8").read().lower()
+    curFile = open(files[0], encoding="utf-8").read().lower() # read the file and convert all its words to lowercase letters
     # Replace punctuation by space and split
     fileWordsList = re.sub("[^\w]", " ", curFile).split()
-    for word in fileWordsList:
+
+    for word in fileWordsList: 
         allWords.add(word)
 
     # TF frequency of word i in document j
@@ -43,7 +40,6 @@ def calcSimilarityBetweenQueryAndFile():
     databaseVectorMagnitude = math.sqrt(calcVectorMagnitude(databaseTF))
     matchPercentage = float(dotProduct / (queryVectorMagnitude * databaseVectorMagnitude)) * 100
 
-    percentages = "Input query text matches %0.02f%% with database." % matchPercentage
-    percentageOfPlagiarism = dict()
-    percentageOfPlagiarism['output'] = percentages
+    percentageOfPlagiarism = "Input query text matches %0.02f%% with database." % matchPercentage
+   
     return percentageOfPlagiarism
