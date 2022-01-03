@@ -11,8 +11,8 @@ def calcSimilarityBetweenTwoQueries():
     secondInputWords, secondInputWordsList = extractQueryText('query2')
 
     # check if data is present in both queries
-    if firstInputWords == -1 or secondInputWords == -1:
-        return ERROR_NO_INPUT
+    if firstInputWords == ERROR_NO_INPUT or secondInputWords == ERROR_NO_INPUT:
+        return ERROR_NO_INPUT, ERROR_NO_INPUT, ERROR_NO_INPUT
 
     allWords = set()
     allWords = firstInputWords.union(secondInputWords)
@@ -43,5 +43,5 @@ def calcSimilarityBetweenTwoQueries():
     matchPercentage = float(
         dotProduct / (queryVectorMagnitude * secondInputVectorMagnitude)) * 100
 
-    percentageOfPlagiarism = "The two queries match %0.02f%% with each other." % matchPercentage
+    percentageOfPlagiarism = "The two inputs match %0.02f%% with each other." % matchPercentage
     return percentageOfPlagiarism, request.form['query1'], request.form['query2']

@@ -3,6 +3,8 @@ import re
 import os
 import numpy as np
 
+from Constants import ERROR_NO_INPUT
+
 
 def calcFrequency(word, wordsList):
     freq = 0
@@ -43,7 +45,7 @@ def extractQueryText(htmlElementName: str):
     # Replace punctuation by space and split
     inputWordsList = re.sub("[^\w]", " ", inputQuery).split()
     if len(inputWordsList) == 0:
-        return -1, -1
+        return ERROR_NO_INPUT, ERROR_NO_INPUT
     for word in inputWordsList:
         allWords.add(word)
     return allWords, inputWordsList

@@ -1,41 +1,56 @@
 <html>
-<head>
-    <link href="{{ url_for('static', filename='homePage.css') }}" rel="stylesheet" type="text/css">
-</head>
-<body>
+  <head>
+    <link
+      href="{{ url_for('static', filename='homePage.css') }}"
+      rel="stylesheet"
+      type="text/css"
+    />
+  </head>
+  <body>
     <div class="left">
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="{{ url_for('plagBetweenFiles') }}"
-                >Compute the similarity between files</a
-                ></li>
-                <li><a href="{{ url_for('loadTwoInputFilesPage') }}"
-                >Compute the similarity between two text inputs </a
-                ></li>
-                <li><a href="{{url_for('plagBetweenQueryAndEnteredFile')}}">Compute the similarity between a text input and a file</a></li>
-                <li><a href="{{url_for('about')}}">About Us</a></li>
-            </ul>
-        </nav>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li>
+            <a href="{{ url_for('plagBetweenFiles') }}"
+              >Compute the similarity between files</a
+            >
+          </li>
+          <li>
+            <a href="{{ url_for('loadTwoInputFilesPage') }}"
+              >Compute the similarity between two text inputs
+            </a>
+          </li>
+          <li>
+            <a href="{{url_for('plagBetweenQueryAndEnteredFile')}}"
+              >Compute the similarity between a text input and a file</a
+            >
+          </li>
+          <li><a href="{{url_for('about')}}">About Us</a></li>
+        </ul>
+      </nav>
     </div>
-<div class="main">
-    <h2>Plagiarism Checker</h2>
+    <div class="main">
+      <h2>Plagiarism Checker</h2>
 
-    <p>There are three types of plagiarism checkers</p>
-    <p>
-        1) Plagiarism Checker system to detect plagiarism in files using cosine similarity.
-        So to compute the similarity between all files on the project directory,
-        the raw data is transformed into vectors, then to arrays of numbers,
-        and then used vectors to compute the similarity between the files and print the percentage.
-    </p>
-    <p>
-        2) Plagiarism Checker using Python-Flask. TF-IDF and
-        cosine similarity. It checks the similarity between two inputs queries.
-    </p>
-    <p>
-        3) Plagiarism Checker system to detect plagiarism of the entered file with the entered query.
-    </p>
-    <p>Thank you.</p>
-</div>
-</body>
+      <p>
+        We have implemented 3 types of plagiarism checkers in order to
+        accomodate as many users as we can
+      </p>
+      <br />
+      <ol>
+        <li>
+          <p>Checking the similarity between multiple input files</p>
+        </li>
+        <li>
+          <p>Checking the similarity between two text inputs</p>
+        </li>
+        <li>
+          <p>
+            Checking the similarity between an input file and one text input
+          </p>
+        </li>
+      </ol>
+    </div>
+  </body>
 </html>

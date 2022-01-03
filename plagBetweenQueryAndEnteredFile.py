@@ -16,6 +16,8 @@ def calcSimilarityBetweenQueryAndFile():
     # check that the user enetered text and uploaded a file
     if len(files) == 0:
         return ERROR_NO_FILES
+    if allWords == ERROR_NO_INPUT or queryWordsList == ERROR_NO_INPUT:
+        return ERROR_NO_INPUT
     if len(queryWordsList) == 0:
         return ERROR_NO_INPUT
 
