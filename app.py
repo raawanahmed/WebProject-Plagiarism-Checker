@@ -16,6 +16,8 @@ def plagBetweenFiles():
     if request.method == 'POST':
         for f in request.files.getlist('file_name'):
             try:
+                if not os.path.exists(app.config["UPLOAD_PATH"] ):
+                    os.makedirs(app.config["UPLOAD_PATH"] )
                 f.save(os.path.join(app.config["UPLOAD_PATH"], f.filename))
             except:
                 return renderPage(fileName="uploadFilesPage.html", warningMessage=NO_FILES_CHOSEN, greetingMessage="")
@@ -69,7 +71,7 @@ def plagBetweenQueryAndEnteredFile():
             return renderPage(fileName="queryAndEnteredFilePage.html", warningMessage=NO_INPUT_SUBMITTED,  greetingMessage="")
 
         return renderPage(fileName='queryAndEnteredFilePage.html', query=request.form['query'],
-                               output=percentageOfPlagiarism['output'])
+                               output=percentageOfPlagiarism)
     return renderPage(fileName='queryAndEnteredFilePage.html', warningMessage="", greetingMessage=CHOOSE_FILE_AND_INPUT_TEXT)
 
 
