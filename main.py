@@ -41,11 +41,11 @@ def loadTwoInputFilesPage():
 
 @app.route("/TwoInputQueries", methods=['POST'])
 def plagBetweenTwoInputQueries():
-    percentageOfPlagiarism = calcSimilarityBetweenTwoQueries()
+    percentageOfPlagiarism, inputText1, inputText2 = calcSimilarityBetweenTwoQueries()
     if percentageOfPlagiarism == ERROR_NO_INPUT:
         return renderPage(fileName="twoQueriesPage.html", warningMessage=NO_INPUT_SUBMITTED, greetingMessage="")
-    return renderPage(fileName='twoQueriesPage.html', query1=percentageOfPlagiarism['inputQuery1'],
-                           query2=percentageOfPlagiarism['inputQuery2'], output=percentageOfPlagiarism['output'])
+    return renderPage(fileName='twoQueriesPage.html', query1=inputText1,
+                           query2=inputText2, output=percentageOfPlagiarism)
 
 
 

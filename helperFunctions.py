@@ -1,6 +1,7 @@
 from flask import request, render_template
 import re
 import os
+import numpy as np
 
 
 
@@ -20,10 +21,10 @@ def calcVectorMagnitude(TFarray):
 
 
 def calcDotProduct(inputQueryTF, databaseTF):
-    dotProduct = 0
-    for i in range(len(inputQueryTF)):
-        dotProduct += inputQueryTF[i] * databaseTF[i]
-    return dotProduct
+    # dotProduct = 0
+    # for i in range(len(inputQueryTF)):
+    #     dotProduct += inputQueryTF[i] * databaseTF[i]
+    return np.dot(inputQueryTF, databaseTF)
 
 
 
