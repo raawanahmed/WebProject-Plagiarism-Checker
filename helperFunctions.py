@@ -18,3 +18,4 @@ def calcDotProduct(inputQueryTF, databaseTF):
     for i in range(len(inputQueryTF)):
         dotProduct += inputQueryTF[i] * databaseTF[i]
     return dotProduct
+

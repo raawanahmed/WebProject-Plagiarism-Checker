@@ -11,38 +11,47 @@ def extractQueryText(HtmlElementName):
     inputQuery = request.form[HtmlElementName]
     inputQuery = inputQuery.lower()
     # Replace punctuation by space and split
-    queryWordsList = re.sub("[^\w]", " ", inputQuery).split()
-    if len(queryWordsList) == 0:
+    inputWordsList = re.sub("[^\w]", " ", inputQuery).split()
+    if len(inputWordsList) == 0:
         return -1, -1
-    for word in queryWordsList:
+    for word in inputWordsList:
         allWords.add(word)
-    return allWords, queryWordsList
+    return allWords, inputWordsList
     # allWords -> is a set contains all words in inputQuery
-    # QueryWordsList ->  this is the input query after filtering it from punctuations
+    # inputWordsList ->  this is the input query after filtering it from punctuations
 
 
 def calcSimilarityBetweenTwoQueries():
-    firstQueryWords, firstQueryWordsList = extractQueryText('query1')
-    secondQueryWords, secondQueryWordList = extractQueryText('query2')
-    if firstQueryWords == -1 or secondQueryWords == -1:
+    firstInputWords, firstInputWordsList = extractQueryText('query1')
+    secondInputWords, secondInputWordsList = extractQueryText('query2')
+    if firstInputWords == -1 or secondInputWords == -1:
         return -1
     allWords = set()
-    allWords = firstQueryWords.union(secondQueryWords)
+    allWords = firstInputWords.union(secondInputWords)
 
     # TF frequency of word i in document j
-    firstInputQueryTF = []
-    secondInputQueryTF = []
+    firstInputTF = []
+    secondInputTF = []
     for word in allWords:
-        firstInputQueryTfCounter = calcFrequency(word, firstQueryWordsList)
-        secondInputQueryTFCounter = calcFrequency(word, secondQueryWordList)
-        firstInputQueryTF.append(firstInputQueryTfCounter)
-        secondInputQueryTF.append(secondInputQueryTFCounter)
+        cnt = 0
+        firstInputInputTfCounter = calcFrequency(word, firstInputWordsList)
+        if word in firstInputWordsList:
+            cnt += 1
+        if word in secondInputWordsList:
+            cnt += 1
+        idf = math.log10(2*1.0/cnt*1.0)
+        print("////////", idf)
+        if idf == 0:
+            idf = 1
+        secondInputTFCounter = calcFrequency(word, secondInputWordsList)*idf
+        firstInputTF.append(firstInputInputTfCounter)
+        secondInputTF.append(secondInputTFCounter)
 
-    dotProduct = calcDotProduct(firstInputQueryTF, secondInputQueryTF)
-    queryVectorMagnitude = math.sqrt(calcVectorMagnitude(firstInputQueryTF))
-    databaseVectorMagnitude = math.sqrt(calcVectorMagnitude(secondInputQueryTF))
+    dotProduct = calcDotProduct(firstInputTF, secondInputTF)
+    queryVectorMagnitude = math.sqrt(calcVectorMagnitude(firstInputTF))
+    secondInputVectorMagnitude = math.sqrt(calcVectorMagnitude(secondInputTF))
     matchPercentage = float(
-        dotProduct / (queryVectorMagnitude * databaseVectorMagnitude)) * 100
+        dotProduct / (queryVectorMagnitude * secondInputVectorMagnitude)) * 100
 
     percentage = "The two queries match %0.02f%% with each other." % matchPercentage
     percentageOfPlagiarism = dict()
