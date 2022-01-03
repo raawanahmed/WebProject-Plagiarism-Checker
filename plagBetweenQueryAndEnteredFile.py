@@ -10,36 +10,49 @@ from helperFunctions import calcDotProduct, calcFrequency, calcVectorMagnitude
 
 def calcSimilarityBetweenQueryAndFile():
     # allWords is a "set" that will store each word in both the file and the text
-    allWords, queryWordsList  = extractQueryText('query')
+    allWords, queryWordsList = extractQueryText('query')
 
-    files = [doc for doc in os.listdir() if doc.endswith('.txt')] 
-    # check that the user enetered text and uploaded a file 
+    files = [doc for doc in os.listdir() if doc.endswith('.txt')]
+    # check that the user enetered text and uploaded a file
     if len(files) == 0:
         return ERROR_NO_FILES
     if len(queryWordsList) == 0:
         return ERROR_NO_INPUT
 
-    curFile = open(files[0], encoding="utf-8").read().lower() # read the file and convert all its words to lowercase letters
+    # read the file and convert all its words to lowercase letters
+    curFile = open(files[0], encoding="utf-8").read().lower()
     # Replace punctuation by space and split
     fileWordsList = re.sub("[^\w]", " ", curFile).split()
 
-    for word in fileWordsList: 
+    for word in fileWordsList:
         allWords.add(word)
 
     # TF frequency of word i in document j
-    inputQueryTF = []
-    databaseTF = []
+    TfIdfOfWordsInInputText = []
+    TfidfOfWordsInFile = []
     for word in allWords:
-        queryTfCounter = calcFrequency(word, queryWordsList)
-        databaseTfCounter = calcFrequency(word, fileWordsList)
-        inputQueryTF.append(queryTfCounter)
-        databaseTF.append(databaseTfCounter)
+        cnt = 0
+        if word in queryWordsList:
+            cnt += 1
+        if word in fileWordsList:
+            cnt += 1
+        idf = math.log(2*1.0/cnt*1.0)
+        if idf == 0:
+            idf = 1
+        counterOfWordInInputTextWithIdf = calcFrequency(
+            word, queryWordsList)*idf
+        counterOfWordInFileWithIdf = calcFrequency(word, fileWordsList)*idf
+        TfIdfOfWordsInInputText.append(counterOfWordInInputTextWithIdf)
+        TfidfOfWordsInFile.append(counterOfWordInFileWithIdf)
 
-    dotProduct = calcDotProduct(inputQueryTF, databaseTF)
-    queryVectorMagnitude = math.sqrt(calcVectorMagnitude(inputQueryTF))
-    databaseVectorMagnitude = math.sqrt(calcVectorMagnitude(databaseTF))
-    matchPercentage = float(dotProduct / (queryVectorMagnitude * databaseVectorMagnitude)) * 100
+    dotProduct = calcDotProduct(TfIdfOfWordsInInputText, TfidfOfWordsInFile)
+    queryVectorMagnitude = math.sqrt(
+        calcVectorMagnitude(TfIdfOfWordsInInputText))
+    databaseVectorMagnitude = math.sqrt(
+        calcVectorMagnitude(TfidfOfWordsInFile))
+    matchPercentage = float(
+        dotProduct / (queryVectorMagnitude * databaseVectorMagnitude)) * 100
 
     percentageOfPlagiarism = "Input query text matches %0.02f%% with database." % matchPercentage
-   
+
     return percentageOfPlagiarism
