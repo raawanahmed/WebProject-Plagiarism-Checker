@@ -1,37 +1,12 @@
 import os
 
-import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 from Constants import ERROR_NO_FILES, ERROR_ONE_FILE_ONLY
 
-from helperFunctions import extractFiles
+from helperFunctions import extractFiles, cosineSimilarity
 
 
 plagiarismResults = set()
-
-
-def vectorize(Data):
-    return TfidfVectorizer().fit_transform(Data).toarray()
-
-
-# return nd-array [[tf*idf for each txt file], etc]
-
-
-# cosine similarity to compute the Plagiarism.
-def similarity(code_1, code_2):
-    return cosine_similarity([code_1, code_2])
-
-
-def cosineSimilarity(x, y):
-    # Ensure length of x and y are the same
-    # if len(x) != len(y):
-    #   return None
-    dot_product = np.dot(x, y)
-    magnitude_x = np.sqrt(np.sum(x ** 2))
-    magnitude_y = np.sqrt(np.sum(y ** 2))
-    cos_similarity = dot_product / (magnitude_x * magnitude_y)
-    return cos_similarity
 
 
 def PlagiarismChecker(filesWithTheirVectors):
@@ -42,21 +17,30 @@ def PlagiarismChecker(filesWithTheirVectors):
         for otherFile, otherVector in temp:
             scoreOfSimilarity = cosineSimilarity(curVector, otherVector)
             file_pair = sorted((curFile, otherFile))
-            score = (file_pair[0], file_pair[1], "{:.2%}".format(scoreOfSimilarity))
+            score = (file_pair[0], file_pair[1],
+                     "{:.2%}".format(scoreOfSimilarity))
             plagiarismResults.add(score)
     return plagiarismResults
 
+
+# return nd-array [[tf*idf for each txt file], etc]
+def vectorize(Data):
+    return TfidfVectorizer().fit_transform(Data).toarray()
 
 
 def calcSimilarityBetweenFiles():
     # load all the path ".txt" files on files directory.
     directory = os.getcwd() + "/files"
     nameOfEachFile, files_in_directory = extractFiles(directory)
+    # check if there is files in directory
     if len(files_in_directory) == 0:
         return ERROR_NO_FILES
     if len(files_in_directory) == 1:
         return ERROR_ONE_FILE_ONLY
-    fileStore = [open(file, encoding="utf-8").read().lower() for file in files_in_directory]
+    # open all files in files_in_directory, file of store will contain list every index is list of strings in each file 
+    # fileStore=[["hi", "there"], ["", ""], ["", ""]]   
+    fileStore = [open(file, encoding="utf-8").read().lower()
+                 for file in files_in_directory]
     # Vectorize the data.
     vectors = vectorize(fileStore)
     # The zip() function takes iterables (can be zero or more), aggregates them in a tuple, and returns it.
