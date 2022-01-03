@@ -9,6 +9,10 @@ body {
   padding: 0px 10px;
 }
 
+p.user {
+  border-style: dashed;
+}
+
 nav {
   float: none;
   clear: both;

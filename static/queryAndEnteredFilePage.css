@@ -3,6 +3,10 @@ body {
 
   font-family: "Lato", sans-serif;
 }
+p.user {
+  border-style: dashed;
+}
+
 .main {
   margin-left: 300px; /* Same as the width of the sidenav */
   font-size: 28px; /* Increased text to enable scrolling */
