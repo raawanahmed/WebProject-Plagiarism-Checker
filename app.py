@@ -13,7 +13,7 @@ app.config["filesDirectory"] = os.getcwd() + "/files"
 
 @app.route("/upload_file", methods=["GET", "POST"])
 def plagBetweenFiles():        
-    if request.method == 'POST':
+    if request.method == 'POST': 
         for f in request.files.getlist('file_name'):
             try:
                 if not os.path.exists(app.config["filesDirectory"] ):
@@ -29,7 +29,7 @@ def plagBetweenFiles():
         if percentageOfPlagiarism == ERROR_EMPTY_FILE:
             return renderPage(fileName="uploadFilesPage.html", warningMessage=EMPTY_FILE_SUBMITTED, greetingMessage="")
         return renderPage(fileName='resultsOfPlagBetweenFilesPage.html', results=percentageOfPlagiarism)
-
+    # Get
     return renderPage(fileName="uploadFilesPage.html", warningMessage="", greetingMessage=CHOOSE_FILES_TO_BE_SUBMITTED)
 
 
@@ -85,3 +85,12 @@ def about():
 
 if __name__ == "__main__":
     app.run()
+
+
+
+# Rawan      calcSimilarityBetweenTwoQueries, calcSimilarityBetweenQueryandFile
+#Agina       first 4 functions Helper function
+#Salma       HTML, CSS
+#Bedo        last 6 functions Helper function  
+#Moataz      app.py           
+#kareem      plagbetweenFiles

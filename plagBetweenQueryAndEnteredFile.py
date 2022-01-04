@@ -33,27 +33,26 @@ def calcSimilarityBetweenQueryAndFile():
 
     # TF frequency of word i in document j
     TfIdfOfWordsInInputText = []
-    TfidfOfWordsInFile = []
+    TfIdfOfWordsInFile = []
     for word in allWords:
         cnt = 0
         if word in queryWordsList:
             cnt += 1
         if word in fileWordsList:
             cnt += 1
-        idf = math.log(2*1.0/cnt*1.0)
-        if idf == 0:
+        idf = math.log10(2*1.0/cnt*1.0)
+        if idf == 0: # to avoid division by zero
             idf = 1
-        counterOfWordInInputTextWithIdf = calcFrequency(
-            word, queryWordsList)*idf
+        counterOfWordInInputTextWithIdf = calcFrequency(word, queryWordsList)*idf
         counterOfWordInFileWithIdf = calcFrequency(word, fileWordsList)*idf
         TfIdfOfWordsInInputText.append(counterOfWordInInputTextWithIdf)
-        TfidfOfWordsInFile.append(counterOfWordInFileWithIdf)
+        TfIdfOfWordsInFile.append(counterOfWordInFileWithIdf)
 
-    dotProduct = calcDotProduct(TfIdfOfWordsInInputText, TfidfOfWordsInFile)
+    dotProduct = calcDotProduct(TfIdfOfWordsInInputText, TfIdfOfWordsInFile)
     queryVectorMagnitude = math.sqrt(
         calcVectorMagnitude(TfIdfOfWordsInInputText))
     databaseVectorMagnitude = math.sqrt(
-        calcVectorMagnitude(TfidfOfWordsInFile))
+        calcVectorMagnitude(TfIdfOfWordsInFile))
     matchPercentage = float(
         dotProduct / (queryVectorMagnitude * databaseVectorMagnitude)) * 100
 

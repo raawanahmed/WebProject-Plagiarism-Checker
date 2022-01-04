@@ -7,7 +7,8 @@ from helperFunctions import calcDotProduct, calcFrequency, calcVectorMagnitude, 
 
 
 def calcSimilarityBetweenTwoQueries():
-    firstInputWords, firstInputWordsList = extractQueryText('query1')
+    # set, List
+    firstInputWords, firstInputWordsList = extractQueryText('query1') 
     secondInputWords, secondInputWordsList = extractQueryText('query2')
 
     # check if data is present in both queries
@@ -30,10 +31,9 @@ def calcSimilarityBetweenTwoQueries():
 
         if idf == 0:
             idf = 1
-        firstInputInputTfCounter = calcFrequency(
-            word, firstInputWordsList) * idf
+        firstInputTfCounter = calcFrequency(word, firstInputWordsList) * idf
         secondInputTfCounter = calcFrequency(word, secondInputWordsList)*idf
-        firstInputTfIdf.append(firstInputInputTfCounter)
+        firstInputTfIdf.append(firstInputTfCounter)
         secondInputTfIdf.append(secondInputTfCounter)
 
     dotProduct = calcDotProduct(firstInputTfIdf, secondInputTfIdf)
