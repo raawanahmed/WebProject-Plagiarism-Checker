@@ -5,7 +5,7 @@ from helperFunctions import extractQueryText
 from flask import request
 from Constants import ERROR_EMPTY_FILE, ERROR_NO_FILES, ERROR_NO_INPUT
 
-from helperFunctions import calcDotProduct, calcFrequency, calcVectorMagnitude
+from helperFunctions import calcDotProduct, calcFrequency, calcVectorMagnitude, calcIDF
 
 
 def calcSimilarityBetweenQueryAndFile():
@@ -35,14 +35,7 @@ def calcSimilarityBetweenQueryAndFile():
     TfIdfOfWordsInInputText = []
     TfIdfOfWordsInFile = []
     for word in allWords:
-        cnt = 0
-        if word in queryWordsList:
-            cnt += 1
-        if word in fileWordsList:
-            cnt += 1
-        idf = math.log10(2*1.0/cnt*1.0)
-        if idf == 0: # to avoid division by zero
-            idf = 1
+        idf = calcIDF(word, queryWordsList, fileWordsList)
         counterOfWordInInputTextWithIdf = calcFrequency(word, queryWordsList)*idf
         counterOfWordInFileWithIdf = calcFrequency(word, fileWordsList)*idf
         TfIdfOfWordsInInputText.append(counterOfWordInInputTextWithIdf)

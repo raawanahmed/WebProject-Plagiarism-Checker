@@ -2,6 +2,7 @@ from flask import request, render_template
 import re
 import os
 import numpy as np
+import math
 
 from Constants import ERROR_NO_INPUT
 
@@ -98,3 +99,16 @@ def cosineSimilarity(listOfWords1, listOfWords2):
     magnitudeOfListOfWords2 = np.sqrt(np.sum(listOfWords2 ** 2))
     cos_similarity = dot_product / (magnitudeOfListOfWords1 * magnitudeOfListOfWords2)
     return cos_similarity
+
+
+
+def calcIDF(word, list1, list2):
+    cnt = 0
+    if word in list1:
+         cnt += 1
+    if word in list2:
+        cnt += 1
+    idf = math.log(2*1.0/cnt*1.0)
+    if idf == 0:
+        idf = 1 #avoid division by zero
+    return idf

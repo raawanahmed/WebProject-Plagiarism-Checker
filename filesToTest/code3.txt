@@ -1,0 +1,14 @@
+#include <iostream>
+
+using namespace std;
+
+int subNum(int a, int b);//Function prototype
+int main() {
+    int result, num1, num2;
+    cout << "Enter two numbers to subtract\n";
+    cin >> num1 >> num2;//read input from the user
+    result = num1 - num2;//call the function
+    cout << "subtraction of given two numbers: " << result;
+    return 0;
+}
+

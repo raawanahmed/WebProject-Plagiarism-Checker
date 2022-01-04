@@ -1,0 +1,10 @@
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    int result, num1, num2;
+    cin >> num1 >> num2;//read input from the user
+    cout << "subtraction of given two numbers: ";
+    return 0;
+}

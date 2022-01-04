@@ -3,7 +3,7 @@ import math
 from flask import request
 from Constants import ERROR_NO_INPUT
 
-from helperFunctions import calcDotProduct, calcFrequency, calcVectorMagnitude, extractQueryText
+from helperFunctions import calcDotProduct, calcFrequency, calcIDF, calcVectorMagnitude, extractQueryText
 
 
 def calcSimilarityBetweenTwoQueries():
@@ -22,15 +22,7 @@ def calcSimilarityBetweenTwoQueries():
     firstInputTfIdf = []
     secondInputTfIdf = []
     for word in allWords:
-        cnt = 0
-        if word in firstInputWordsList:
-            cnt += 1
-        if word in secondInputWordsList:
-            cnt += 1
-        idf = math.log(2*1.0/cnt*1.0)
-
-        if idf == 0:
-            idf = 1
+        idf = calcIDF(word, firstInputWordsList, secondInputWordsList)
         firstInputTfCounter = calcFrequency(word, firstInputWordsList) * idf
         secondInputTfCounter = calcFrequency(word, secondInputWordsList)*idf
         firstInputTfIdf.append(firstInputTfCounter)
